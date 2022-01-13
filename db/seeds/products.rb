@@ -12,6 +12,7 @@ p_03.categories << category_1
 p_04 = Product.create(name: "Samsung S10", description: "Beautiful, elegant, powerful phone", stock: 10, price: 900, sku: "S100901")
 p_04.categories << category_1
 
+
 category_2 = Category.find_by(name: "Shoes")
 
 p_05 = Product.create(name: "Zico Beach Sandal", description: "The best sandal ever", stock: 50, price: 5, sku: "ZSD009")
