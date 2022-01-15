@@ -4,10 +4,18 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :order_items
   has_many :products, through: :order_items
+  has_many :payments
 
   before_create -> { generate_number(RANDOM_SIZE) }
 
   validates :number, uniqueness: true
+
+  def add_product(product_id, quantity)
+    product = Product.find(product_id)
+    if product && product.stock > 0
+      order_items.create(product_id: product_id, quantity: quantity, price: product.price)
+    end
+  end
   
   def generate_number(size)
     self.number = loop do 

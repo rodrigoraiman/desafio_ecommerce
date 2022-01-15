@@ -2,12 +2,12 @@ class CartsController < ApplicationController
   before_action :authenticate_user!
 
   def update
-    product = params[:cart][:product_id]
+    product_id = params[:cart][:product_id]
     quantity = params[:cart][:quantity]
 
-    current_order.add_product(product, quantity)
+    current_order.add_product(product_id, quantity)
 
-    redirect_to root_url, notice: "Product added successfuly"
+    redirect_to root_path, notice: "Product added successfuly"
   end
 
   def show
@@ -15,10 +15,10 @@ class CartsController < ApplicationController
   end
 
   def pay_with_paypal
-    order = Order.find(params[:cart][:order_id])
+    order = current_order
 
     #price must be in cents
-    price = order.total * 100
+    price = order.total
 
     response = EXPRESS_GATEWAY.setup_purchase(price,
       ip: request.remote_ip,
@@ -39,8 +39,6 @@ class CartsController < ApplicationController
 
     redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
   end
-
-
 
   def process_paypal_payment
     details = EXPRESS_GATEWAY.details_for(params[:token])
@@ -67,6 +65,9 @@ class CartsController < ApplicationController
         order.save!
         payment.save!
       end
+      redirect_to root_url, notice: "Compra exitosa"
+    else
+      redirect_to root_url, alert: "Hemos tenido problemas para procesar tu pago"
     end
   end
 end
