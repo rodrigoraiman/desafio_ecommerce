@@ -15,4 +15,14 @@ class OrderTest < ActiveSupport::TestCase
 
     assert_not dup_order.valid?
   end
+
+  test 'adds products as order_items' do
+    user = users( :one)
+    order = Order.create(user_id: user.id)
+    productos = products(:one)
+    quantity = 1
+
+    order.add_products( products_id, quantity)
+    asstert_equal(order.order_items.count, 1)
+  end
 end
