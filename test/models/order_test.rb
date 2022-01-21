@@ -22,7 +22,7 @@ class OrderTest < ActiveSupport::TestCase
     productos = products(:one)
     quantity = 1
 
-    order.add_products( products_id, quantity)
+    order.add_product( product_id, quantity)
     asstert_equal(order.order_items.count, 1)
   end
 end
