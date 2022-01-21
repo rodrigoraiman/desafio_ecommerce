@@ -35,3 +35,10 @@ p_09.categories << category_3
 p_10 = Product.create(name: "Casio L12 Watch", description: "Never be late again, arrive on time", stock: 8, price: 50, sku: "CW7788")
 p_10.categories << category_3
 
+category_4 = Category.find_by(name: "Sports")
+
+p_11 = Product.create(name: "t.shirt", description: "colo-colo", stock: 8, price: 50, sku: "xx1234")
+p_11.categories << category_4
+
+
+
