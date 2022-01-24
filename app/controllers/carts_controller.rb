@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!
+ 
 
   def update
     product_id = params[:cart][:product_id]

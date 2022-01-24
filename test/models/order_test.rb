@@ -17,12 +17,14 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test 'adds products as order_items' do
-    user = users( :one)
+    user = users(:one)
     order = Order.create(user_id: user.id)
-    productos = products(:one)
+    product = products(:one)
     quantity = 1
+    order.add_product(product.id, quantity)
 
-    order.add_product( product_id, quantity)
-    asstert_equal(order.order_items.count, 1)
-  end
+    assert_equal(order.order_items.count, 1)
+  end 
+
+  
 end

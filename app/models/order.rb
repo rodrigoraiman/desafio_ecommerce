@@ -12,7 +12,7 @@ class Order < ApplicationRecord
 
   def add_product(product_id, quantity)
     product = Product.find(product_id)
-    if product && product.stock > 0
+    if product 
       order_items.create(product_id: product_id, quantity: quantity, price: product.price)
     end
   end
@@ -32,6 +32,10 @@ class Order < ApplicationRecord
     "BO"
   end
 
+  def hash_sixe
+    9
+  end
+
   def add_product(product_id, quantity)
     product = Product.find(product_id)
     if product && (product.stock > 0)
@@ -43,8 +47,12 @@ class Order < ApplicationRecord
   def compute_total
     sum = 0
     order_items.each do |item|
-      sum += item.price
+      sum = item.price
     end
     update_attribute(:total, sum)
+  end
+  
+  def set_state_completed
+    update_attribute(state: "completed")
   end
 end
